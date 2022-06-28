@@ -1,12 +1,10 @@
-import React from "react";
-import { type ControlsState } from "./Blog";
+import React, { Dispatch, SetStateAction } from "react";
+import { ControlsState } from "./Blog";
 
-interface BlogControlsProps {
+const BlogControls: React.FC<{
   controls: ControlsState;
-  setControls: (value: React.SetStateAction<ControlsState>) => void;
-}
-
-const BlogControls: React.FC<BlogControlsProps> = (props) => {
+  setControls: Dispatch<SetStateAction<ControlsState>>;
+}> = (props) => {
   const { controls, setControls } = props;
   const handleFilter = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setControls((prevControls) => ({

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import { type Post } from "./Blog";
 
 interface BlogFormProps {
-  setNewPost: (value: React.SetStateAction<Post>) => void;
+  setNewPost: Dispatch<React.SetStateAction<Post>>;
 }
 
 const BlogForm = (props: BlogFormProps) => {
@@ -56,6 +56,13 @@ const BlogForm = (props: BlogFormProps) => {
     }));
   };
 
+  const classesInput =
+    "blog__input blog__input_header checklist__input" +
+    (formState.isError ? " blog__input_error" : "");
+  const placeholderTitleInput = formState.isError
+    ? "Empty title"
+    : "Name your story...";
+
   return (
     <form className="blog block block_white" id="blog" onSubmit={handleSubmit}>
       <div className="blog__inputarea">
@@ -63,19 +70,16 @@ const BlogForm = (props: BlogFormProps) => {
           Title:
         </label>
         <input
-          className={
-            "blog__input blog__input_header checklist__input" +
-            (formState.isError ? " blog__input_error" : "")
-          }
+          className={classesInput}
           type="text"
           id="blogtitle"
-          placeholder={formState.isError ? "Empty title" : "Name your story..."}
+          placeholder={placeholderTitleInput}
           value={formState.title}
           onChange={handleChangeTitle}
           onFocus={handleFocus}
         />
         <input
-          className="blog__input blog__input_header checklist__input"
+          className={classesInput}
           type="text"
           id="blogtext"
           placeholder="Tell us what happened..."

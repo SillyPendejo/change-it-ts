@@ -9,20 +9,20 @@ interface ChecklistFields {
 }
 
 function ChecklistForm() {
-  const [inputValues, setInputValues] = useState({
+  const [inputValues, setInputValues] = useState<ChecklistFields>({
     firstName: "",
     lastName: "",
     email: "",
     event: "",
     date: "",
-  } as ChecklistFields);
-  const [errorValues, setErrorValues] = useState({
+  });
+  const [errorValues, setErrorValues] = useState<ChecklistFields>({
     firstName: "",
     lastName: "",
     email: "",
     event: "",
     date: "",
-  } as ChecklistFields);
+  });
 
   function isValidText(inputText: string, pattern: RegExp) {
     if (inputText === "") return true;
@@ -233,9 +233,9 @@ function ChecklistForm() {
       ? "checklist__select"
       : "checklist__select checklist__error";
   const classesDate =
-    errorValues.event === ""
-      ? "checklist__select"
-      : "checklist__select checklist__error";
+    errorValues.date === ""
+      ? "checklist__input"
+      : "checklist__input checklist__error";
 
   return (
     <form className="checklist__form_element" onSubmit={handleSubmit}>

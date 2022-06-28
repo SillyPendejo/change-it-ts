@@ -19,33 +19,29 @@ export interface Post {
   date: number | null;
 }
 
-export type Posts = Post[];
-
-interface StorageEntry {
+export interface StorageEntry {
   isSortAbc: boolean;
   isSortDate: boolean;
   isReversed: boolean;
   filter: string;
-  posts: Posts;
+  posts: Post[];
 }
 
-export type StorageEntries = StorageEntry[];
-
 const Blog: React.FC = () => {
-  const [controls, setControls] = useState({
+  const [controls, setControls] = useState<ControlsState>({
     isSortAbc: false,
     isSortDate: false,
     isReversed: false,
     filter: "",
-  } as ControlsState);
-  const [newPost, setNewPost] = useState({
+  });
+  const [newPost, setNewPost] = useState<Post>({
     title: "",
     text: "",
     date: null,
-  } as Post);
-  const [posts, setPosts] = useState([] as Posts);
+  });
+  const [posts, setPosts] = useState<Post[]>([]);
 
-  const getStorage = (): StorageEntries => {
+  const getStorage = (): StorageEntry[] => {
     let blogStorage = localStorage.blog
       ? JSON.parse(localStorage.blog)
       : [
@@ -60,7 +56,7 @@ const Blog: React.FC = () => {
     return blogStorage;
   };
 
-  const sendToStorage = (entriesForStorage: StorageEntries) => {
+  const sendToStorage = (entriesForStorage: StorageEntry[]) => {
     localStorage.blog = JSON.stringify(entriesForStorage);
   };
 
@@ -145,7 +141,7 @@ const Blog: React.FC = () => {
     return null;
   };
 
-  const sortPosts = (posts: Posts) => {
+  const sortPosts = (posts: Post[]) => {
     if (!controls.isSortAbc && !controls.isSortDate) return posts;
     if (posts.length < 2) return posts;
 
@@ -166,7 +162,7 @@ const Blog: React.FC = () => {
     return posts.sort(comparePosts);
   };
 
-  const createEntry = (postsForEntry: Posts): StorageEntry => ({
+  const createEntry = (postsForEntry: Post[]): StorageEntry => ({
     isSortAbc: controls.isSortAbc,
     isSortDate: controls.isSortDate,
     isReversed: controls.isReversed,
@@ -175,7 +171,7 @@ const Blog: React.FC = () => {
   });
 
   useEffect(() => {
-    let sortedPosts: Posts;
+    let sortedPosts: Post[];
     const storageSortedPosts = findSortedPostsInStorage();
     if (storageSortedPosts) {
       setPosts(storageSortedPosts);

@@ -1,17 +1,18 @@
-import { type Posts, type StorageEntries } from "./Blog";
+import { Dispatch } from "react";
+import { Post, StorageEntry } from "./Blog";
 
 interface BlogPostsProps {
-  posts: Posts;
-  setPosts: (value: React.SetStateAction<Posts>) => void;
-  getStorage: () => StorageEntries;
-  sendToStorage: (entriesForStorage: StorageEntries) => void;
+  posts: Post[];
+  setPosts: Dispatch<React.SetStateAction<Post[]>>;
+  getStorage: () => StorageEntry[];
+  sendToStorage: (entriesForStorage: StorageEntry[]) => void;
 }
 
 const BlogPosts: React.FC<BlogPostsProps> = (props) => {
   const { posts, setPosts, getStorage, sendToStorage } = props;
 
   const deletePost = (id: number) => {
-    setPosts((prevPosts: Posts) =>
+    setPosts((prevPosts: Post[]) =>
       prevPosts.filter((post) => post.date !== id)
     );
     const storage = getStorage();
