@@ -1,14 +1,14 @@
 import "../css/PromoText.css";
 import "../css/block.css";
 
-const textArray = [
-  "We strive to provide the very best in ",
-  "automation",
-  ",",
-  " coupled with a personal, human touch.",
-];
-
 const PromoTextSecond: React.FC = () => {
+  const textArray = [
+    "We strive to provide the very best in ",
+    "automation",
+    ",",
+    " coupled with a personal, human touch.",
+  ];
+
   return (
     <div className="promo-text">
       <span className="promo-text_white">

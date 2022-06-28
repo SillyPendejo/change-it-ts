@@ -8,7 +8,7 @@ interface ChecklistFields {
   date: string;
 }
 
-function ChecklistForm() {
+const ChecklistForm: React.FC = () => {
   const [inputValues, setInputValues] = useState<ChecklistFields>({
     firstName: "",
     lastName: "",
@@ -177,13 +177,7 @@ function ChecklistForm() {
   }, [inputValues.date]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const stateValues = [
-      inputValues.firstName,
-      inputValues.lastName,
-      inputValues.email,
-      inputValues.event,
-      inputValues.date,
-    ];
+    const stateValues = Object.values(inputValues);
     const stateNames = Object.keys(inputValues);
 
     e.preventDefault();
@@ -330,6 +324,6 @@ function ChecklistForm() {
       </button>
     </form>
   );
-}
+};
 
 export default ChecklistForm;

@@ -10,7 +10,7 @@ import Blog from "./components/Blog/Blog";
 import Checklist from "./components/Checklist/Checklist";
 import Footer from "./components/Footer";
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="app__container">
       <div className="app__body">
