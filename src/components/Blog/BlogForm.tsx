@@ -1,17 +1,13 @@
-import { Dispatch, useState } from "react";
-import { type Post } from "./Blog";
+import { Dispatch } from "react";
+import { FormState } from "./Blog";
 
 interface BlogFormProps {
-  setNewPost: Dispatch<React.SetStateAction<Post>>;
+  formState: FormState;
+  setFormState: Dispatch<React.SetStateAction<FormState>>;
 }
 
-const BlogForm = (props: BlogFormProps) => {
-  const { setNewPost } = props;
-  const [formState, setFormState] = useState({
-    title: "",
-    text: "",
-    isError: false,
-  });
+const BlogForm: React.FC<BlogFormProps> = (props) => {
+  const { formState, setFormState } = props;
 
   const handleChangeTitle = ({
     target,
@@ -38,16 +34,10 @@ const BlogForm = (props: BlogFormProps) => {
       }));
       return;
     }
-    setNewPost({
-      title: formState.title,
-      text: formState.text,
+    setFormState((prevState) => ({
+      ...prevState,
       date: Date.now(),
-    });
-    setFormState({
-      title: "",
-      text: "",
-      isError: false,
-    });
+    }));
   };
   const handleFocus = () => {
     setFormState((prevState) => ({
@@ -62,6 +52,9 @@ const BlogForm = (props: BlogFormProps) => {
   const placeholderTitleInput = formState.isError
     ? "Empty title"
     : "Name your story...";
+  const placeholderTextInput = formState.isError
+    ? "Write a title above"
+    : "Tell us what happened...";
 
   return (
     <form className="blog block block_white" id="blog" onSubmit={handleSubmit}>
@@ -82,7 +75,7 @@ const BlogForm = (props: BlogFormProps) => {
           className={classesInput}
           type="text"
           id="blogtext"
-          placeholder="Tell us what happened..."
+          placeholder={placeholderTextInput}
           value={formState.text}
           onChange={handleChangeText}
           onFocus={handleFocus}
