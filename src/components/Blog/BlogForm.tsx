@@ -85,6 +85,7 @@ const BlogForm = (props: BlogFormProps) => {
           placeholder="Tell us what happened..."
           value={formState.text}
           onChange={handleChangeText}
+          onFocus={handleFocus}
         ></input>
       </div>
       <button className="story__button button">Post your story</button>
