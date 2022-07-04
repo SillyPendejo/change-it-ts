@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import BlogControls from "./BlogControls";
 import BlogForm from "./BlogForm";
 import BlogPosts from "./BlogPosts";
@@ -42,7 +42,7 @@ const Blog: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const getStorage = (): StorageEntry[] => {
-    let blogStorage = localStorage.blog
+    const blogStorage = localStorage.blog
       ? JSON.parse(localStorage.blog)
       : [
           {
@@ -64,13 +64,13 @@ const Blog: React.FC = () => {
     if (!storageEntry.isSortAbc && !storageEntry.isSortDate) {
       storageEntry.posts.push(newPost);
     } else {
-      let indexForNewPost = storageEntry.posts.findIndex((storageEntryPost) => {
+      const indexForNewPost = storageEntry.posts.findIndex((storageEntryPost) => {
         const newPostValue = storageEntry.isSortAbc
           ? newPost.title
-          : newPost.date!;
+          : newPost.date as number;
         const storageEntryPostValue = storageEntry.isSortAbc
           ? storageEntryPost.title
-          : storageEntryPost.date!;
+          : storageEntryPost.date as number;
         let comparationResult;
 
         comparationResult = newPostValue < storageEntryPostValue;
@@ -148,13 +148,12 @@ const Blog: React.FC = () => {
     const comparePosts = (firstPost: Post, secondPost: Post) => {
       const firstPostValue = controls.isSortAbc
         ? firstPost.title
-        : firstPost.date!;
+        : firstPost.date as number;
       const secondPostValue = controls.isSortAbc
         ? secondPost.title
-        : secondPost.date!;
-      let comparationResult;
+        : secondPost.date as number;
 
-      comparationResult = firstPostValue > secondPostValue ? 1 : -1;
+      const comparationResult = firstPostValue > secondPostValue ? 1 : -1;
       if (controls.isReversed) return comparationResult === 1 ? -1 : 1;
       return comparationResult;
     };

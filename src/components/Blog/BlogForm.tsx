@@ -1,4 +1,4 @@
-import { Dispatch, useState } from "react";
+import React, { Dispatch, useState } from "react";
 import { type Post } from "./Blog";
 
 interface BlogFormProps {
