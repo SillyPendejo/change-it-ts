@@ -16,7 +16,7 @@ const BlogPosts: React.FC<BlogPostsProps> = (props) => {
     const storage = getStorage();
     for (const storageEntry of storage) {
       for (let i = 0; i < storageEntry.posts.length; i++) {
-        if (storageEntry.posts[i].date! === id) {
+        if (storageEntry.posts[i].date === id) {
           storageEntry.posts.splice(i, 1);
           break;
         }
@@ -33,11 +33,11 @@ const BlogPosts: React.FC<BlogPostsProps> = (props) => {
       </div>
       <div className="blog__right_container">
         <div className="blog__post_date">
-          {new Date(post.date!).toLocaleString()}
+          {new Date(post.date).toLocaleString()}
         </div>
         <div
           className="blog__post_delete"
-          onClick={() => deletePost(post.date!)}
+          onClick={() => deletePost(post.date)}
         ></div>
       </div>
     </div>
