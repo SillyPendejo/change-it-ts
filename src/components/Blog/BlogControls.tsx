@@ -1,10 +1,12 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ControlsState } from "./Blog";
 
-const BlogControls: React.FC<{
+interface BlogControlsProps {
   controls: ControlsState;
   setControls: Dispatch<SetStateAction<ControlsState>>;
-}> = (props) => {
+}
+
+const BlogControls: React.FC<BlogControlsProps> = (props) => {
   const { controls, setControls } = props;
   const handleFilter = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setControls((prevControls) => ({

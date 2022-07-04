@@ -13,18 +13,25 @@ export interface ControlsState {
   filter: string;
 }
 
-export interface Post {
-  title: string;
-  text: string;
-  date: number | null;
-}
-
 export interface StorageEntry {
   isSortAbc: boolean;
   isSortDate: boolean;
   isReversed: boolean;
   filter: string;
   posts: Post[];
+}
+
+export interface Post {
+  title: string;
+  text: string;
+  date: number;
+}
+
+export interface FormState {
+  title: string;
+  text: string;
+  date: number | null;
+  isError: boolean;
 }
 
 const Blog: React.FC = () => {
@@ -34,10 +41,11 @@ const Blog: React.FC = () => {
     isReversed: false,
     filter: "",
   });
-  const [newPost, setNewPost] = useState<Post>({
+  const [formState, setFormState] = useState<FormState>({
     title: "",
     text: "",
     date: null,
+    isError: false,
   });
   const [posts, setPosts] = useState<Post[]>([]);
 
@@ -92,26 +100,28 @@ const Blog: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!newPost.date) return;
+    if (!formState.date) return;
+
+    const newPostForStorage = {
+      title: formState.title,
+      text: formState.text,
+      date: formState.date,
+    };
 
     const storage = getStorage();
     for (const storageEntry of storage) {
       if (
-        newPost.title.toUpperCase().includes(storageEntry.filter.toUpperCase())
+        formState.title
+          .toUpperCase()
+          .includes(storageEntry.filter.toUpperCase())
       ) {
-        insertPostInEntry(newPost, storageEntry);
+        insertPostInEntry(newPostForStorage, storageEntry);
       }
     }
     sendToStorage(storage);
 
-    return () => {
-      setNewPost({
-        title: "",
-        text: "",
-        date: null,
-      });
-    };
-  }, [newPost]);
+    return;
+  }, [formState.date]);
 
   const findSortedPostsInStorage = () => {
     for (const storageEntry of getStorage()) {
@@ -199,11 +209,11 @@ const Blog: React.FC = () => {
     const storage = getStorage();
     storage.push(createEntry(sortedPosts));
     sendToStorage(storage);
-  }, [controls, newPost]);
+  }, [controls, formState]);
 
   return (
     <div className="blog_container">
-      <BlogForm setNewPost={setNewPost} />
+      <BlogForm formState={formState} setFormState={setFormState} />
       <BlogControls controls={controls} setControls={setControls} />
       <BlogPosts
         posts={posts}
@@ -213,6 +223,6 @@ const Blog: React.FC = () => {
       />
     </div>
   );
-}
+};
 
 export default Blog;
